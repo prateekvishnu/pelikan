@@ -33,9 +33,12 @@ use common::time::Seconds;
 use core::hash::{BuildHasher, Hasher};
 use std::convert::TryInto;
 
+// NOTE: this represents the versioning of the internal data layout and must be
+// incremented when breaking changes are made to the datastructures
+const VERSION: u64 = 0;
+
 // submodules
 mod builder;
-mod datapool;
 mod error;
 mod eviction;
 mod hashtable;
@@ -70,4 +73,4 @@ pub(crate) use item::*;
 pub(crate) use segments::*;
 pub(crate) use ttl_buckets::*;
 
-metrics::test_no_duplicates!();
+common::metrics::test_no_duplicates!();

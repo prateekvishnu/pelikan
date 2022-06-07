@@ -10,7 +10,7 @@ mod common;
 #[macro_use]
 extern crate logger;
 
-use common::*;
+use crate::common::*;
 
 use config::SegcacheConfig;
 use pelikan_segcache_rs::Segcache;
@@ -19,7 +19,7 @@ use std::time::Duration;
 
 fn main() {
     debug!("launching server");
-    let server = Segcache::new(SegcacheConfig::default());
+    let server = Segcache::new(SegcacheConfig::default()).expect("failed to launch segcache");
 
     // wait for server to startup. duration is chosen to be longer than we'd
     // expect startup to take in a slow ci environment.
