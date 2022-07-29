@@ -3,10 +3,14 @@ FROM ubuntu:20.04 as builder
 
 ## Install build dependencies.
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y clang curl wget
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.20.0/cmake-3.20.0.tar.gz && tar -zxvf cmake-3.20.0.tar.gz
-RUN cd cmake-3.20.0 && ./bootstrap
-RUN make && make install
+    DEBIAN_FRONTEND=noninteractive apt-get install -y clang curl 
+
+RUN apt-get update && apt-get -y upgrade && apt-get install -y cmake
+# RUN curl -sSL https://cmake.org/files/v3.5/cmake-3.5.2-Linux-x86_64.tar.gz | tar -xzC /opt
+
+#RUN apt-get install software-properties-common && add-apt-repository ppa:george-edison55/cmake-3.x
+#RUN apt-get update && apt-get install cmake
+
 RUN curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 RUN ${HOME}/.cargo/bin/rustup default nightly
 RUN ${HOME}/.cargo/bin/cargo install -f cargo-fuzz
